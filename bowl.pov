@@ -9,7 +9,7 @@
     textureOutside,
     textureInside
 )
-//test
+//test2
 #declare bowl_radius = 3;
 #declare inner_radius = bowl_radius - bowlThickness;
 object {
