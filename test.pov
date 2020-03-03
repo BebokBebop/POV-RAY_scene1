@@ -4,6 +4,7 @@
 #include "MyTextures.pov"
 #include "table.pov"
 #include "bowl.pov"
+#include "prism.pov"
 
 //flask
 #local fsize = 0.75;
@@ -25,9 +26,9 @@ flaskW2Textures(
     0.16 * fsize,       // flaskThickness
 
     // material{texture{pigment{color Yellow}}},   // flaskTexture,
-    // material{texture{pigment{color Red}}},   // flaskTexture,
     material {FlaskTexture1},  // flaskTexture
-    material {FlaskTexture2},    // cylinderTexture
+    material{texture{pigment{color Red}}},   // flaskTexture,
+    //material {FlaskTexture2},    // cylinderTexture
 
     4.42  * fsize,       // altTextureH1,
     5.95  * fsize        // altTextureH2
@@ -69,6 +70,27 @@ object{
     )
     scale<.9,.9,.9>
     translate<4.5,1.5,1>
+}
+
+//prism
+object{
+    whole_prism(
+        3,     //hex_top,          
+        0,     //hex_bottom,  
+        4.6,     //trapeze_top1,  
+        5,   //trapeze_top2,  
+        0,     //trapeze_botto 
+        4,     //rhombus_top,  
+        .5,     //rhombus_bottom
+        1.7,     //hex_side,  
+        0.1,   //hex_thickness     
+        1.3,     //trapeze_cutof 
+        .6    //rhombus_side 
+        prismMaterial
+    )
+    scale .9
+    translate<-6,+0.01,1.5>
+    rotate<0,30,0>
 }
 //camera
 camera {

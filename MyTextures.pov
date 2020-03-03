@@ -25,7 +25,8 @@ texture { average
         [1 
             pigment { rgbft <.8,.8,.8,.8,.03> }
             finish { 
-                diffuse albedo 0.7 fresnel
+                diffuse albedo 0.7 
+                //fresnel
                 //reflection .3
                 //roughness .01
                 //brilliance 2
@@ -45,7 +46,7 @@ texture { average
 }
 #end
 
-#declare flaskNeckBlur = flashNeckBlurMacro( .3, 40 )
+#declare flaskNeckBlur = flashNeckBlurMacro( .3, 3 )
 
 #declare FlaskTexture1 = 
 material{
@@ -304,5 +305,26 @@ texture{
 }
 #declare tableTexture = 
 texture{
+}
 
+#declare prismMaterial = 
+material{
+    texture{
+        pigment {
+            color rgbt<.9,.9,.9,.95>
+        }
+        finish {
+            //specular 0.4
+            reflection 0.05
+            //refraction 0.5
+            phong 0.01
+            ior 1.5
+            //crand 0.02
+        }
+        normal { 
+            bumps 0.5
+            scale .1
+            rotate<3,30,3> 
+        }
+    }
 }
