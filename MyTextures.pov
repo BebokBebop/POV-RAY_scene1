@@ -16,39 +16,27 @@
         }}
 #end // of macro
 
-#declare f_reflective_metal = 
-finish {
-    ambient .2 
-    diffuse .2
-    specular 1.5 
-    roughness .02 
-    brilliance 2
-    reflection { .6 metallic 1 } metallic
-}
-
 #macro flashNeckBlurMacro( BlurAmount2, BlurSamples2 )
 texture { average 
     texture_map {
         #local Ind = 0;
         #local S = seed(0);
         #while(Ind < BlurSamples2)
-            [1 // The pigment of the object:
-            pigment { rgbt <.8,.8,.8,.9> }
-            // The surface finish:
+        [1 
+            pigment { rgbft <.8,.8,.8,.8,.03> }
             finish { 
-                diffuse .2
+                diffuse albedo 0.7 fresnel
                 //reflection .3
                 //roughness .01
                 //brilliance 2
                // ior 1.5
             }
             // This is the actual trick:
-            normal { wood ramp_wave
-                    rotate rand(S)*30 turbulence .6
-                    bump_size -BlurAmount2
-                    translate <rand(S),rand(S),rand(S)>*.02
-                    scale .002
-                    //scale 1000
+            normal { 
+                bumps BlurAmount2 
+                translate <rand(S),rand(S),rand(S)>*100
+                scale 1000 
+                //scale 1000
             }
         ]
         #declare Ind = Ind+1;
@@ -57,7 +45,7 @@ texture { average
 }
 #end
 
-#declare flaskNeckBlur = flashNeckBlurMacro( .01, 1 )
+#declare flaskNeckBlur = flashNeckBlurMacro( .3, 40 )
 
 #declare FlaskTexture1 = 
 material{
@@ -83,10 +71,7 @@ material{
 #declare FlaskTexture2 =
 material{
     texture {
-        pigment {
-            colour rgbft <.85,.85,.85,.6,.001>
-        /* increase t for more transparency */
-        }
+        flaskNeckBlur
 
         // normal {
         //     crackle, 0.010
@@ -151,22 +136,6 @@ material{
         fade_color          rgb <0.000,0.000,0.000>
     }
 }
-
-
-// #declare FlaskTexture2 = 
-// texture
-// {
-//     pigment{rgbt <1, 1, 1, 0.9>}
-//     finish
-//     {
-//         diffuse 0.3
-//         ambient 0.7
-//         reflection {0.05 fresnel on}
-//         phong 0.25
-//         phong_size 20.0
-//         ior 1.5
-//     }
-// }
 
 #declare tearTextureOutside = 
 texture{pigment {color Yellow }}
