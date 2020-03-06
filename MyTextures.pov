@@ -51,13 +51,15 @@ texture { average
 #declare FlaskTexture1 = 
 material{
     texture{
-        pigment {color rgbt<.5,.5,.5,.9>}
-        //normal {bumps 0.001}
+        pigment {color rgb .9
+            transmit .98
+        }
         finish {
             //specular 0.4
-            reflection 0.05
+            reflection .05
             //refraction 0.5
-            phong 0.01
+            specular .9
+            roughness .0025
             ior 1.5
             //crand 0.02
         }
@@ -100,7 +102,6 @@ material{
             colour rgbft <.85,.85,.85,.8,.05>
         /* increase t for more transparency */
         }
-
         normal {
             crackle, 0.010
             form < -1.000, 1.000, 0.000 >
@@ -108,7 +109,6 @@ material{
             offset 0.000
             scale     <0.010,0.010,0.010>  /* Scale micro-normals. */
         }
-
         finish {
             ambient     rgb <0.100,0.100,0.100>*2.500
             brilliance  1.000
@@ -142,10 +142,10 @@ material{
 texture{pigment {color Yellow }}
 
 #declare tearTextureInside = 
- texture {
+texture {
     T_Chrome_1A
     finish {
-        reflection 0.1
+        reflection 0.01
         phong 4
         phong_size 20
     }
@@ -311,20 +311,20 @@ texture{
 material{
     texture{
         pigment {
-            color rgbt<.9,.9,.9,.95>
+            color rgb<1,1,1>*.3
+            transmit .7
         }
         finish {
             //specular 0.4
-            reflection 0.05
-            //refraction 0.5
+            reflection 0.2
             phong 0.01
             ior 1.5
             //crand 0.02
         }
         normal { 
-            bumps 0.5
-            scale .1
+            bumps 0.15
+            scale .18
             rotate<3,30,3> 
         }
     }
-}
+}  

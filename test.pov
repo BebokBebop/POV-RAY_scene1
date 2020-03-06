@@ -4,6 +4,7 @@
 #include "MyTextures.pov"
 #include "table.pov"
 #include "bowl.pov"
+#include "pestle.pov"
 #include "prism.pov"
 
 //flask
@@ -26,77 +27,57 @@ flaskW2Textures(
     0.16 * fsize,       // flaskThickness
 
     // material{texture{pigment{color Yellow}}},   // flaskTexture,
-    material {FlaskTexture1},  // flaskTexture
-    material{texture{pigment{color Red}}},   // flaskTexture,
+    material{FlaskTexture1},   // flaskTexture,
+    material {
+        texture{
+            pigment {
+                colour rgb .99
+                filter .18
+                transmit .05
+            }
+            // normal {
+            //     crackle, 0.010
+            //     form < -1.000, 1.000, 0.000 >
+            //     metric 2.000
+            //     offset 0.000
+            //     scale     <0.010,0.010,0.010>  /* Scale micro-normals. */
+            // }
+
+            finish {
+                ior 1.5
+                //ambient     rgb <0.100,0.100,0.100>*2.500
+                //brilliance  1.000
+                //diffuse     0.300
+                //phong       0.000
+                //phong_size  1.000
+                specular .9
+                roughness .0025
+                reflection {
+                    //rgb <0.015,0.015,0.015>, 
+                    //rgb <0.025,0.025,0.025>
+                    fresnel   1
+                    //falloff   0.000
+                    //exponent  1.000
+                    //metallic  0.000
+                }
+            }
+        }
+
+    },  // flaskTexture
     //material {FlaskTexture2},    // cylinderTexture
 
     4.42  * fsize,       // altTextureH1,
     5.95  * fsize        // altTextureH2
 
 )translate<0,0.0001,0>
-}
-
-//tear
-object{ 
-    #local tSize = 1.15 ;
-    roundedHollowTear(
-        2       *tSize,       //bigRadius,
-        1.05    *tSize,       //smallRadius,
-        0.95    *tSize,       //cutRadius,
-        0.06     *tSize,       //angleA,
-        0.75    *tSize,       //height,
-        0.45    *tSize,     //thic,
-        0.08    *tSize,      //roundness
-        0.005    *tSize,     //insideMetal outSticking
-        0.02    *tSize,     //tail roundness outside
-        0.001   *tSize,     //tail roundness inside
-        texture{tearTextureOutside},  //textureOutside
-        texture{tearTextureInside}     //textureInside
-    )
-    rotate<-90,0,-25>
-    rotate<0,-13,0>
-    translate < -4.5, 2*tSize, -1.5>
-}
-
-//bowl
-object{
-    bowl(
-        3,
-        0.1,
-        texture { BowlTextureOut
-        },  
-        texture {BowlTextureIn
-        }
-    )
-    scale<.9,.9,.9>
-    translate<4.5,1.5,1>
-}
-
-//prism
-object{
-    whole_prism(
-        3,     //hex_top,          
-        0,     //hex_bottom,  
-        4.6,     //trapeze_top1,  
-        5,   //trapeze_top2,  
-        0,     //trapeze_botto 
-        4,     //rhombus_top,  
-        .5,     //rhombus_bottom
-        1.7,     //hex_side,  
-        0.1,   //hex_thickness     
-        1.3,     //trapeze_cutof 
-        .6    //rhombus_side 
-        prismMaterial
-    )
-    scale .9
-    translate<-6,+0.01,1.5>
-    rotate<0,30,0>
-}
+} 
 //camera
 camera {
+    //angle 20
     angle 20
     location<0,15,-45>
-    look_at<0,2,0> 
+    //look_at<0,2,0> 
+    look_at<0,4,0> 
 }
 //cam top
 // camera {
