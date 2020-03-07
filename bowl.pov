@@ -7,85 +7,85 @@
     bowl_radius,
     bowlThickness,
     textureOutside,
-    textureInside
+    textureInside,
+    angleA,
+    neckHeight,
+    edgeRoundingR
 )
 //test2
-#declare bowl_radius = 3;
+#declare bowl_radius = 3; //TODO usun
 #declare inner_radius = bowl_radius - bowlThickness;
+#local sinA=sin(radians(angleA));
+#local cosA=cos(radians(angleA));
+#local tanB=tan(radians(angleA));
+#local cotB=1/tanB;
+#local r1 = sinA * bowl_radius;
+#local r2 = r1 - cotB * neckHeight;
+#local hc = cosA * bowl_radius;
 object {
-    difference {
-        sphere {
-            <0, 0, 0>, bowl_radius
+    merge{
+        difference {
+            sphere {
+                <0, 0, 0>, bowl_radius
+                texture { textureOutside }
+            }
+            box {
+                <-1.1*bowl_radius, hc, bowl_radius*1.1>,
+                <1.1*bowl_radius, 1.1*bowl_radius, -1.1*bowl_radius>
+                texture { textureOutside }
+            }
+            difference{
+                sphere {
+                    <0, 0, 0>, inner_radius
+                    scale <1, 0.9, 1> 
+                    texture { textureInside }
+                }
+                box{
+                    <-bowl_radius*1.01, -bowl_radius-0.1, -bowl_radius*1.01>
+                    <bowl_radius*1.01, -bowl_radius + bowlThickness, bowl_radius*1.01>
+                    texture { textureInside }
+                }
+            }
         }
-        box {
-            <-1.1*bowl_radius, bowl_radius-bowl_radius*0.6, bowl_radius*1.1>,
-            <1.1*bowl_radius, 1.1*bowl_radius, -1.1*bowl_radius>
+        //box{<-4,0,4>, <4, 0.00001, -4>}
+        
+        difference{
+            merge {
+                intersection{
+                    object{
+                        Round_Cone(
+                            <0,hc,0>, r1
+                            <0,hc+neckHeight,0>, r2,
+                            edgeRoundingR, 0
+                        )
+                        texture { textureOutside }
+                    }
+                    box {
+                        <-1.1*r1, hc+neckHeight/2-.01, r1*1.1>,
+                        <1.1*r1, hc+neckHeight+edgeRoundingR+0.1, -1.1*r1>
+                        texture { textureOutside }
+                    } 
+                }
+                intersection {
+                    cone {
+                        <0,hc,0>, r1
+                        <0,hc+neckHeight,0>, r2
+                        texture { textureOutside }
+                    }
+                    box {
+                        <-1.1*r1, hc+neckHeight/2, r1*1.1>,
+                        <1.1*r1, 0, -r1*1.1>
+                        texture { textureOutside }
+                    }   
+                }
+            }
+            cone {
+                <0,hc-0.001,0>, r1 - bowlThickness
+                <0,hc+neckHeight+0.001,0>, r2 +.01- bowlThickness
+                texture { textureInside }
+            }
         }
-        sphere {
-            <0, 0, 0>, inner_radius
-        }
-
     }
-    texture { textureOutside }
-    scale <1, 0.8, 1>
+    scale <1, 0.8, 1> 
 }
 #end
-
-// bowl(
-//     3,
-//     0.1,
-//     texture {
-//         pigment{P_Copper4}
-//         finish {
-//             ambient 0.30
-//             brilliance 3
-//             diffuse 0.4
-//             metallic
-//             specular 0.70
-//             roughness 1/60
-//             reflection 0.5
-//             phong .1
-//             phong_size .25
-//         }
-//         normal { 
-//             bumps 0.05
-//             scale 0.8 
-//         }
-//     },  
-//     texture {
-//         T_Brass_1A
-//         finish {
-//             crand .1
-//             phong_size 1
-//             phong 1
-//         }
-//         normal { 
-//             bumps 0.1 
-//             scale 0.8 
-//         }
-//     }
-
-// )
-
-
-// camera {
-//     //orthographic 
-//     location <0, 5, -10>
-//     look_at <0, 0, 0>
-// }
-// light_source {
-//     <10, 10, -10> // <x, y, z>
-//     color <1.0, 1.0,  1.0> // <red, green, blue>
-// }
-// plane {
-//     y, -2.7
-//     pigment { P_WoodGrain5A } 
-//     finish {
-//         diffuse 0.9
-//         //brilliance 1
-//         reflection 0.1
-//         phong .75
-//         phong_size 20
-//     }
-//     rotate <0, -30, 0> // <x, y, z>
-// }

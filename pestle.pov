@@ -1,31 +1,25 @@
 #include "shapes.inc"
 #include "colors.inc"
-#include "textures.inc"
-#include "woods.inc"
 
-// camera {
-//     location <3,5,-20>
-//     look_at <0,2,1>
-// }
-
-// light_source {
-//     <0, 0, -10>
-//     color White
-// }
 
 
 #declare pestleWoodPigment = 
-pigment {        
-    wood        
-    color_map {          
-        [0.0 color<.4,.15,.1>*0.15]          
-        [0.9 color <.4,.15,.1>*0.2]          
-        [1.0 color <.4,.15,.1>*0.3]       
-    }        
-    turbulence 0.05        
-    scale <0.1, 0.6, 0.5> 
-   
-} 
+texture{
+    pigment {        
+        wood        
+        color_map {          
+            [0.0 color<.4,.15,.1>*0.15]          
+            [0.9 color <.4,.15,.1>*0.2]          
+            [1.0 color <.4,.15,.1>*0.3]       
+        }        
+        turbulence 0.05        
+        scale <0.1, 0.6, 0.5> 
+    } 
+    finish{
+        phong .1
+        phong_size 100
+    }
+}
 
 #macro pestle(
     maj_radius, 
@@ -41,7 +35,7 @@ pigment {
         color rgb <0.40, 0.15, 0.1>*0.2
     }                   
     finish {
-       crand 0.4
+        crand 0.4
         diffuse 0.7
     }    
 }
@@ -71,7 +65,7 @@ union {
         maj_radius, minor_radius
         translate <0,1.5*minor_radius,0>
     }
-     torus {
+    torus {
         maj_radius, minor_radius
         translate <0,3*minor_radius,0>
     }
@@ -88,13 +82,10 @@ union {
             texture_map {
                 [0.2 handle_texture2] 
                 [0.7 handle_texture] 
-               
             }    
             turbulence 0.5  
             rotate <0, 180, 0>
-           
         } 
-           
     }
     cylinder { 
         <center, length+5.0*minor_radius>
@@ -112,12 +103,9 @@ union {
         total_radius - 0.2
     }
     texture {
-        pigment {
-            wood_texture            
-        }
-        //rotate <0,0,90>
+        wood_texture            
     }  
-     rotate <0, 180, 0>   
+    rotate <0, 180, 0>   
 }
 #end 
 

@@ -3,6 +3,8 @@
 #include "woods.inc"
 #include "metals.inc"
 
+//flask  ///////////////////////////////////////////////
+
 #macro Raster(RScale, RLine)
     pigment{gradient x
         scale RScale
@@ -138,6 +140,8 @@ material{
     }
 }
 
+
+//tear  ///////////////////////////////////////////////
 #declare tearTextureOutside = 
 texture{pigment {color Yellow }}
 
@@ -152,87 +156,21 @@ texture {
         
 }
 
-#declare BowlColor = rgb <.5, .19, .13>;
-#declare PolishedBowlTexture =
-    texture{
-    pigment{color BowlColor } //P_Copper4
-    finish {
-        //ambient 0.30
-        //brilliance 3
-        diffuse 0.4
-        metallic
-        specular 0.70
-        roughness 1/60
-        reflection 0.05
-        phong .3
-        phong_size .001
-    }
-    normal { 
-        bumps 0.05
-        scale 0.8 
-    }
-}
-#declare UnpolishedBowlTexture = 
-texture{
-    pigment{color BowlColor } //P_Copper4
-    finish {
-        //ambient 0.30
-        //brilliance 3
-        diffuse .64
-        metallic
-        specular 0.70
-        roughness 1/60
-        reflection 0.007
-        phong .5
-        phong_size .05
-    }
-    normal { 
-        bumps 0.05
-        scale 0.8 
-    }
-}
-#declare BowlTextureOut = 
-texture {
-    bozo
-    scale <3, .7, 3>
-    rotate<0,30,0>
-    texture_map {
-        [0.3  UnpolishedBowlTexture] 
-        [0.3  PolishedBowlTexture]
-        [0.6  PolishedBowlTexture]
-        [0.9  UnpolishedBowlTexture]
-    }
-    turbulence 0.08      
-    //rotate<90,0,0>    
-}
 
+//table  ///////////////////////////////////////////////
 
-#declare BowlTextureIn = 
-texture{
-    T_Brass_1A
-    finish {
-        crand .1
-        phong_size 1
-        phong 1
-    }
-    normal { 
-        bumps 0.1 
-        scale 0.8 
-    }
-}
 #declare myWoodPigment = 
 pigment {        
     wood        
     color_map {          
-        [0.0 color <.5,.2,.1>]          
-        [0.9 color <.3,.2,.1>]          
-        [1.0 color <.2,.1,.1>]       
+    [0.0 color rgb <.9,.05,0>*.3]
+    [0.3 color rgb <.9,.05,0>*.5]
+    [0.6 color rgb <.9,.05,0>*.7]
     }        
-    turbulence 0.05        
-    scale <0.1, 0.6, 0.5>
+    turbulence .05        
+    scale <.1, .6, .5>
 }
-
-#declare myWoodTexture =
+#declare tableTexture =
 texture{
     pigment{
         brick     
@@ -243,17 +181,9 @@ texture{
 
         brick_size <1,2.5,20>
         mortar 0.0125
-    }rotate<0,0,90>
-    // pigment {        
-    //     wood        
-    //     color_map {          
-    //         [0.0 color <.5,.2,.1>]          
-    //         [0.9 color <.3,.2,.1>]          
-    //         [1.0 color <.2,.1,.1>]        
-    //     }        
-    //     turbulence 0.05        
-    //     scale <0.1, 0.6, 0.5>
-    // }
+    }
+    rotate<0,0,90>
+
     finish{
         phong 0.25
         reflection 0.1
@@ -269,7 +199,7 @@ texture{
         #while(Ind < BlurSamples) 
             [1 
             // The pigment of the object: 
-            myWoodTexture
+            tableTexture
             normal {
                 bumps BlurAmount 
                 translate <rand(S),rand(S),rand(S)>*100
@@ -281,37 +211,125 @@ texture{
         #end
     }
 }
-#declare tableWoodTexture =
-texture{
-    pigment { myWoodPigment } 
-    finish {
-        diffuse 0.9
-        //brilliance 1
-        reflection 0.1
-        phong .75
-        phong_size 20
-    }  
+
+//bowl  ///////////////////////////////////////////////
+#declare bowl_color = rgb<.9,.3,.2>*.3;
+#declare bowl_color2 = rgb<.9,.3,.2>*.2;
+#declare bowl_texture_out = 
+texture { 
+    wrinkles scale 2 //warp {reset_children}
+    texture_map {
+        [0 
+            pigment { bowl_color}
+            finish {
+                ambient 0 
+                diffuse 0.3 
+                reflection bowl_color
+                
+                //reflection_max 0.6
+                //reflection_min 0.3 
+                //reflect_metallic 
+                metallic
+                phong 5
+                phong_size 10 
+
+                //specular 1 
+                //roughness 0.001
+            }
+            normal {
+                dents 0.02 scale 0.05
+            }
+        ]
+        [1 
+            pigment {bowl_color2}
+            finish {
+                ambient 0 
+                diffuse 0.65 
+                //reflection_max 0.5
+                //reflection_min 0.2 
+                //reflect_metallic 
+                //metallic
+                phong 2
+                phong_size 15   
+                //specular .3
+                //roughness 0.09
+            }
+            normal { 
+                bump_map { 
+                    png "BrushedMetal.png" 
+                    map_type 2 
+                    interpolate 2
+                }
+                translate <0,-0.5,0> 
+                scale y*.15
+                bump_size .04
+            }
+        ]
+    } 
 }
-#declare tableTextureTint = 
-texture{
-    #declare brightnessT = 0.9;
-    pigment{color <
-        0.463 *brightnessT,
-        0.039 *brightnessT,
-        0.051 *brightnessT
-    > 
-    transmit 0.3
-    }
-}
-#declare tableTexture = 
-texture{
+#declare bowl_texture_in = 
+texture { 
+    wrinkles scale 2 //warp {reset_children}
+    texture_map {
+        [0 
+            pigment { bowl_color}
+            finish {
+                ambient 0 
+                diffuse 0.6
+                reflection {
+                    bowl_color2*.2
+                    //0.03
+                    //.4
+                }
+                
+                //reflection_max 0.6
+                //reflection_min 0.3 
+                //reflect_metallic 
+                metallic
+                // phong 5
+                // phong_size 10 
+
+                specular 1
+                roughness 0.0001
+            }
+            normal {
+                dents 0.02 scale 0.05
+            }
+        ]
+        [1 
+            pigment {bowl_color2}
+            finish {
+                ambient 0 
+                diffuse 0.65 
+                //reflection_max 0.5
+                //reflection_min 0.2 
+                //reflect_metallic 
+                //metallic
+                phong 1.5
+                phong_size 18     
+                //specular .3
+                //roughness 0.09
+            }
+            normal { 
+                bump_map { 
+                    png "BrushedMetal.png" 
+                    map_type 2 
+                    interpolate 2
+                }
+                translate <0,-0.5,0> 
+                scale y*.15
+                bump_size .04
+            }
+        ]
+    } 
 }
 
+//prism  ///////////////////////////////////////////////
 #declare prismMaterial = 
 material{
     texture{
         pigment {
-            color rgb<1,1,1>*.3
+            color rgb<1,.9,.8>*.3
             transmit .7
         }
         finish {

@@ -15,7 +15,7 @@ intersection {
         #if(doBlur)
         texture{tableBlurTexture}
         #else
-        texture{myWoodTexture}  
+        texture{tableTexture}  
         #end
     }
     object{
@@ -26,7 +26,7 @@ intersection {
             tableRoundness, 
             0
         )
-        texture{myWoodTexture}  
+        texture{tableTexture}  
     }
     cutaway_textures
     //#if (doBlur)

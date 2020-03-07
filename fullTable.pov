@@ -4,6 +4,7 @@
 #include "MyTextures.pov"
 #include "table.pov"
 #include "bowl.pov"
+#include "pestle.pow"
 #include "prism.pov"
 
 //flask
@@ -58,34 +59,41 @@ object{
     translate < -4.5, 2*tSize, -1.5>
 }
 
-//bowl
-object{
-    bowl(
-        3,
-        0.1,
-        texture { BowlTextureOut
-        },  
-        texture {BowlTextureIn
-        }
-    )
-    scale<.9,.9,.9>
-    translate<4.5,1.5,1>
-}
-//pestle
-object {
-    pestle(
-        1.4,
-        1.7,
-        15,
-        0,
-        pigment {     
-            pestleWoodPigment
-        }
-    )
-    scale <0.15, 0.15, 0.15>
-    rotate <-20, 0, -50>    
-    
-    translate <5.3, 1.8, 0.6>
+//bowl & pestle
+union{
+    //bowl
+    object{
+        bowl(
+            3,
+            0.1,
+            texture { bowl_texture_out
+            },  
+            texture {bowl_texture_in
+            },
+            85,    //angleA, 83
+            .7,    //neckHeight,
+            .06    //engeRoundingR
+        )
+        scale<.9,.9,.9>
+        translate<4.5,1.5,1>
+    }
+    //pestle
+    object {
+        pestle(
+            1.4,
+            1.7,
+            15,
+            0,
+            pigment {     
+                pestleWoodPigment
+            }
+        )
+        scale <0.15, 0.15, 0.15>
+        rotate <-20, 0, -52>    
+        
+        translate <5.3, 1.58, 0.6>
+    }
+    translate<0,.3,0>
 }
 
 //prism
@@ -138,26 +146,24 @@ rgb<
         0.6 *lampBrightness
 >;
 
+#local roz = 5;
 light_source{
     <-2.5, 30, -3.5> 
     color lampColor
-}   
-light_source{
-    <-2, 30, -3> 
-    color lampColor
-}   
-light_source{
-    <-1.5, 30, -3> 
-    color lampColor
-}   
-// light_source{
-//     <0,5,0>
-//     color rgb<.1,.1,.1>
-// }
+    area_light <roz, 0, 0>, <0, 0, roz>, 3, 3
+    adaptive 1
+    jitter
+}    
+
 //flash
+#local flashRoz = .1;
 light_source{
-    <-1,15.3,-45> 
+    <0,16.3,-45> 
     color rgb<.99,.99,.99>
+    area_light <flashRoz, 0, 0>, <0, flashRoz, 0>, 2, 2
+    adaptive 1
+    jitter
+
     fade_distance 40
     fade_power 2 
 }  

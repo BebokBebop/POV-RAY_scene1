@@ -7,83 +7,58 @@
 #include "pestle.pov"
 #include "prism.pov"
 
-//flask
-#local fsize = 0.75;
-object{
-flaskW2Textures(
-    0.1  * fsize,       // topRoundness
-    1.7  * fsize,       // topCylRoundness
-    1.25  * fsize,       // topRadius
-    1.5  * fsize,       // topHeight
+union{
+    //bowl
+    object{
+        bowl(
+            3,
+            0.1,
+            texture { bowl_texture_out
+            },  
+            texture {bowl_texture_in
+            },
+            85,    //angleA, 83
+            .7,    //neckHeight,
+            .06    //engeRoundingR
+        )
+        scale<.9,.9,.9>
+        translate<4.5,1.5,1>
+    }
+    //pestle
+    object {
+        pestle(
+            1.4,
+            1.7,
+            15,
+            0, 
+            pestleWoodPigment
+        )
+        scale <0.15, 0.15, 0.15>
+        rotate <-20, 0, -52>    
+        
+        translate <5.3, 1.58, 0.6>
+    }
+    translate<0,.3,0>
+}
 
-    1.2  * fsize,       // bottomCylRoundness
-    0.25 * fsize,       // bottomRoundness
-    2.69  * fsize,       // bottomRadius
-    4.6    * fsize,       // bottomHeight
-
-    1.3  * fsize,       // cylinderHeight,
-    0.63 * fsize,       // cylinderRadius,
-
-    0.16 * fsize,       // flaskThickness
-
-    // material{texture{pigment{color Yellow}}},   // flaskTexture,
-    material{FlaskTexture1},   // flaskTexture,
-    material {
-        texture{
-            pigment {
-                colour rgb .99
-                filter .18
-                transmit .05
-            }
-            // normal {
-            //     crackle, 0.010
-            //     form < -1.000, 1.000, 0.000 >
-            //     metric 2.000
-            //     offset 0.000
-            //     scale     <0.010,0.010,0.010>  /* Scale micro-normals. */
-            // }
-
-            finish {
-                ior 1.5
-                //ambient     rgb <0.100,0.100,0.100>*2.500
-                //brilliance  1.000
-                //diffuse     0.300
-                //phong       0.000
-                //phong_size  1.000
-                specular .9
-                roughness .0025
-                reflection {
-                    //rgb <0.015,0.015,0.015>, 
-                    //rgb <0.025,0.025,0.025>
-                    fresnel   1
-                    //falloff   0.000
-                    //exponent  1.000
-                    //metallic  0.000
-                }
-            }
-        }
-
-    },  // flaskTexture
-    //material {FlaskTexture2},    // cylinderTexture
-
-    4.42  * fsize,       // altTextureH1,
-    5.95  * fsize        // altTextureH2
-
-)translate<0,0.0001,0>
-} 
 //camera
+// camera {
+//     angle 22
+//     location<0,15,-45>
+//     look_at<0,2,0> 
+// }
 camera {
     //angle 20
-    angle 20
+    angle 10
     location<0,15,-45>
     //look_at<0,2,0> 
-    look_at<0,4,0> 
+    look_at<5.5,3,0> 
 }
 //cam top
 // camera {
-//     angle 90
+//     angle 20
 //     location<0,20,0>
-//     look_at<0,0,0> 
+//     look_at<5,0,0> 
 // }
 //cam bot
 // camera {
@@ -103,26 +78,24 @@ rgb<
         0.6 *lampBrightness
 >;
 
+#local roz = 5;
 light_source{
     <-2.5, 30, -3.5> 
     color lampColor
-}   
-light_source{
-    <-2, 30, -3> 
-    color lampColor
-}   
-light_source{
-    <-1.5, 30, -3> 
-    color lampColor
-}   
-// light_source{
-//     <0,5,0>
-//     color rgb<.1,.1,.1>
-// }
+    area_light <roz, 0, 0>, <0, 0, roz>, 3, 3
+    adaptive 1
+    jitter
+}    
+
 //flash
+#local flashRoz = .1;
 light_source{
-    <-1,15.3,-45> 
+    <0,16.3,-45> 
     color rgb<.99,.99,.99>
+    area_light <flashRoz, 0, 0>, <0, flashRoz, 0>, 2, 2
+    adaptive 1
+    jitter
+
     fade_distance 40
     fade_power 2 
 }  
@@ -167,6 +140,7 @@ plane{
         }
     } 
 }
+//ceiling
 plane{
     <0,1,0> 30.5
     texture{
