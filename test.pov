@@ -7,23 +7,60 @@
 #include "pestle.pov"
 #include "prism.pov"
 
+//flask
+#local fsize = 0.75;
+difference{
+object{
+    flaskW2Textures(
+        0.1  * fsize,       // topRoundness
+        1.7  * fsize,       // topCylRoundness
+        1.25  * fsize,       // topRadius
+        1.5  * fsize,       // topHeight
+
+        1.2  * fsize,       // bottomCylRoundness
+        0.25 * fsize,       // bottomRoundness
+        2.69  * fsize,       // bottomRadius
+        4.6    * fsize,       // bottomHeight
+
+        1.3  * fsize,       // cylinderHeight,
+        0.63 * fsize,       // cylinderRadius,
+
+        0.12 * fsize,       // flaskThickness
+
+        material{texture{pigment{color Yellow}}},   // flaskTexture,
+        // material {FlaskTexture4},  // flaskTexture
+        //material{texture{pigment{color Red}}},   // flaskTexture,
+        material {FlaskNeckTexture1},    // cylinderTexture
+
+        4.42  * fsize,       // altTextureH1,
+        5.95  * fsize        // altTextureH2
+        )
+        translate<0,0.0001,0>
+    }
+// box{
+//     <-100,-1,-100>
+//     <100,10,0>
+// }
+}
+
 //bowl & pestle
 union{
     //bowl
     object{
         bowl(
-            3,
+            2.7,
             0.1,
             texture { bowl_texture_out
             },  
             texture {bowl_texture_in
             },
-            85,    //angleA, 83
-            .7,    //neckHeight,
+            83    ,    //angleA, 83
+            .27 ,    //neckHeight,
             .06    //engeRoundingR
         )
-        scale<.9,.9,.9>
-        translate<4.5,1.5,1>
+        scale <1.05, 0.89, 1.05> 
+        //scale<.9,.9,.9>
+        translate<4.3,1.85,1>
     }
     //pestle
     object {
@@ -37,28 +74,30 @@ union{
         scale <0.15, 0.15, 0.15>
         rotate <-20, 0, -52>    
         
-        translate <5.3, 1.58, 0.6>
+        translate <5.3, 1.72, 0.6>
     }
-    translate<0,.3,0>
+    translate<-.1,.3,0>
 }
 
 
 //camera
-// camera {
-//     angle 22
-//     location<0,15,-45>
-//     look_at<0,2,0> 
-// }
 camera {
-    //angle 20
-    angle 12
+    angle 22
     location<0,15,-45>
-    look_at<5.5,2,0> 
+    look_at<0,2,0> 
     right x * 16/9
+    right x * 1024/768
 }
+// camera {
+//     //angle 20
+//     angle 12
+//     location<0,15,-45>
+//     look_at<5.5,2,0> 
+//     right x * 16/9
+// }
 //cam top
 // camera {
-//     angle 20
+//     angle 80
 //     location<0,20,0>
 //     look_at<0,0,0> 
 // }
@@ -105,45 +144,53 @@ light_source{
 
 //table
 
-#local tableRadius = 23;
+#local tableRadius = 27.5;
 #local tableRoundness = 2;
+#local translationVector = <-4,0,-18>;
 #declare doBlur = 0;
 object{
     table(tableRadius,tableRoundness,doBlur)
     rotate<0,30,0>
-    translate<-4,0,-12>
+    translate translationVector 
 }
 
 //wall
-plane{
-    <0,0,1> 8.8
-    texture{
-        pigment{color <1.5,1.6,0.1>}
-        finish {
-            diffuse .9
-        }
-    } 
-    rotate<30,20,0>
+
+#local fac = 2;
+#local dist = -1;
+#local sFac = 1.3;
+difference{
+    cone{
+        <0,-2,0> (sFac*tableRadius)+1+dist
+        <0,100,0> ((sFac*tableRadius)+1+dist)*fac
+    }
+    cone{
+        <0,-2,0> (sFac*tableRadius)+dist
+        <0,100,0> ((sFac*tableRadius)+dist)*fac
+    }
+    // box{
+    //     <-100,-10,-100>
+    //     <100,50,tableRadius/2>
+    // }
+    translate translationVector*sFac
+    translate <-1,0,-1.2>
+    texture{ wallTexture }
+
 }
-plane{
-    <1,0,0> 25
-    texture{
-        pigment{color <01.5,1.6,0.1>}
-        finish {
-            diffuse .9
-        }
-    } 
-}
-plane{
-    <-1,0,0> 30
-    texture{
-        pigment{color <01.5,1.6,0.1>}
-        finish {
-            diffuse .9
-        }
-    } 
-}
-//ceiling
+// plane{
+    //     <0,0,1> 8.8
+    //     texture{ wallTexture }
+    //     rotate<30,20,0>
+    // }
+    // plane{
+    //     <1,0,0> 25
+    //     texture{ wallTexture } 
+    // }
+    // plane{
+    //     <-1,0,0> 30
+    //     texture{ wallTexture } 
+    // }
+    //ceiling
 plane{
     <0,1,0> 30.5
     texture{

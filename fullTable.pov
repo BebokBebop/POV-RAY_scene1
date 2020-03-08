@@ -10,31 +10,31 @@
 //flask
 #local fsize = 0.75;
 object{
-flaskW2Textures(
-    0.1  * fsize,       // topRoundness
-    1.7  * fsize,       // topCylRoundness
-    1.25  * fsize,       // topRadius
-    1.5  * fsize,       // topHeight
+    flaskW2Textures(
+        0.1  * fsize,       // topRoundness
+        1.7  * fsize,       // topCylRoundness
+        1.25  * fsize,       // topRadius
+        1.5  * fsize,       // topHeight
 
-    1.2  * fsize,       // bottomCylRoundness
-    0.25 * fsize,       // bottomRoundness
-    2.69  * fsize,       // bottomRadius
-    4.6    * fsize,       // bottomHeight
+        1.2  * fsize,       // bottomCylRoundness
+        0.25 * fsize,       // bottomRoundness
+        2.69  * fsize,       // bottomRadius
+        4.6    * fsize,       // bottomHeight
 
-    1.3  * fsize,       // cylinderHeight,
-    0.63 * fsize,       // cylinderRadius,
+        1.3  * fsize,       // cylinderHeight,
+        0.63 * fsize,       // cylinderRadius,
 
-    0.16 * fsize,       // flaskThickness
+        0.12 * fsize,       // flaskThickness
 
-    // material{texture{pigment{color Yellow}}},   // flaskTexture,
-    material {FlaskTexture4},  // flaskTexture
-    //material{texture{pigment{color Red}}},   // flaskTexture,
-    material {FlaskNeckTexture1},    // cylinderTexture
+        // material{texture{pigment{color Yellow}}},   // flaskTexture,
+        material {FlaskTexture4},  // flaskTexture
+        //material{texture{pigment{color Red}}},   // flaskTexture,
+        material {FlaskNeckTexture1},    // cylinderTexture
 
-    4.42  * fsize,       // altTextureH1,
-    5.95  * fsize        // altTextureH2
-
-)translate<0,0.0001,0>
+        4.42  * fsize,       // altTextureH1,
+        5.95  * fsize        // altTextureH2
+    )
+    translate<0,0.0001,0>
 }
 
 //tear
@@ -64,18 +64,19 @@ union{
     //bowl
     object{
         bowl(
-            3,
+            2.7,
             0.1,
             texture { bowl_texture_out
             },  
             texture {bowl_texture_in
             },
-            85,    //angleA, 83
-            .7,    //neckHeight,
+            83    ,    //angleA, 83
+            .27 ,    //neckHeight,
             .06    //engeRoundingR
         )
-        scale<.9,.9,.9>
-        translate<4.5,1.5,1>
+        scale <1.05, 0.89, 1.05> 
+        //scale<.9,.9,.9>
+        translate<4.3,1.85,1>
     }
     //pestle
     object {
@@ -89,11 +90,10 @@ union{
         scale <0.15, 0.15, 0.15>
         rotate <-20, 0, -52>    
         
-        translate <5.3, 1.58, 0.6>
+        translate <5.3, 1.72, 0.6>
     }
-    translate<-.3,.3,0>
+    translate<-.1,.3,0>
 }
-
 
 //prism
 object{
@@ -123,7 +123,7 @@ camera {
     location<0,15,-45>
     look_at<0,2,0> 
     right x * 1920/1080
-
+    //right x * 16/9
 }
 //cam top
 // camera {

@@ -285,27 +285,36 @@ merge{
     altTextureH1,
     altTextureH2
 )
-
 difference{
     merge{
-        flask(
-            topRoundness,
-            topCylRoundness,
-            topRadius,
-            topHeight,
-            
-            bottomRoundness
-            bottomCylRoundness
-            bottomRadius,
-            bottomHeight,
+        difference{
+            flask(
+                topRoundness,
+                topCylRoundness,
+                topRadius,
+                topHeight,
+                
+                bottomRoundness
+                bottomCylRoundness
+                bottomRadius,
+                bottomHeight,
 
-            cylinderHeight,
-            cylinderRadius,
+                cylinderHeight,
+                cylinderRadius,
 
-            flaskThickness,
+                flaskThickness,
 
-            flaskTexture
-        )
+                flaskTexture
+            )
+            box{
+                <-100,-1,-100>
+                <100,flaskThickness+0.002,100>
+                material{flaskTexture}
+            }
+            cutaway_textures
+        }
+
+        //neck
         intersection{
             difference{
                 object{
@@ -358,6 +367,33 @@ difference{
                 <0, altTextureH2, 0>
                 bottomRadius +0.0001
                 material{cylinderTexture}
+            }
+            cutaway_textures
+        }
+        //bottom
+        intersection{
+            flask(
+                topRoundness,
+                topCylRoundness,
+                topRadius,
+                topHeight,
+                
+                bottomRoundness
+                bottomCylRoundness
+                bottomRadius,
+                bottomHeight,
+
+                cylinderHeight,
+                cylinderRadius,
+
+                flaskThickness,
+
+                flaskBottomTexture
+            )
+            box{
+                <-100,-1,-100>
+                <100,flaskThickness+0.002,100>
+                material{flaskBottomTexture}
             }
             cutaway_textures
         }

@@ -5,67 +5,23 @@
 
 //flask  ///////////////////////////////////////////////
 
-#macro Raster(RScale, RLine)
-    pigment{gradient x
-        scale RScale
-        color_map{
-        [0.000   color rgbt<0,0,0,0>]
-        [0+RLine color rgbt<0,0,0,0>]
-        [0+RLine color rgbt<1,1,1,1>]
-        [1-RLine color rgbt<1,1,1,1>]
-        [1-RLine color rgbt<0,0,0,0>]
-        [1.000   color rgbt<0,0,0,0>]
-        }}
-#end // of macro
-
-#macro flashNeckBlurMacro( BlurAmount2, BlurSamples2 )
-texture { average 
-    texture_map {
-        #local Ind = 0;
-        #local S = seed(0);
-        #while(Ind < BlurSamples2)
-        [1 
-            pigment { rgbft <.8,.8,.8,.8,.03> }
-            finish { 
-                diffuse albedo 0.7 
-                //fresnel
-                //reflection .3
-                //roughness .01
-                //brilliance 2
-               // ior 1.5
-            }
-            // This is the actual trick:
-            normal { 
-                bumps BlurAmount2 
-                translate <rand(S),rand(S),rand(S)>*100
-                scale 1000 
-                //scale 1000
-            }
-        ]
-        #declare Ind = Ind+1;
-        #end
-    }
-}
-#end
-
-#declare flaskNeckBlur = flashNeckBlurMacro( .3, 3 )
-
 #declare FlaskNeckTexture1 = 
 material{
     texture{
         pigment{
-            rgb <1,1,.75>*.88
+            rgb <1,.95,.55>*.88
             filter .5
         }
         finish{
             reflection{
-                0 1
-                fresnel
+                0
+                0.1
+                falloff 10
             }
             ambient 0 
             diffuse 1 
-            specular .4 
-            roughness 1/250
+            specular .6
+            roughness .0005
         }
     }
     interior{
@@ -176,16 +132,21 @@ material{
     }
 }
 #declare FlaskTexture4 =
-material{   //-----------------------------------------------------------
+material{   
     texture { 
-        pigment{ rgbf <0.98, 0.98, 0.98, 0.9> }
-        normal { bumps 0.08 scale 1.5} 
+        pigment{ 
+            rgb 1 
+            transmit .99
+        }
+        normal { bumps 0.1 scale 1.5} 
         finish { 
-            ambient 0.1 
+            ambient 0.9
             diffuse 0.1 
             reflection {
-                0.05  
-                fresnel on
+                0.005
+                0.3
+                falloff 1
+                //fresnel on
             }
             specular 0.8 
             roughness 0.0003 
@@ -193,11 +154,50 @@ material{   //-----------------------------------------------------------
             phong_size 400
             conserve_energy
             }
-    } // end of texture -------------------------------------------
+    } 
     interior{ 
         ior 1.5 
         caustics 0.5
-    } // end of interior ------------------------------------------
+    } 
+}
+
+#declare flaskBottomTexture =
+material{   
+    texture { 
+        pigment{ 
+            rgb 1 
+            transmit .99
+        }
+        normal { 
+            cylindrical .2 // bump depth
+            sine_wave
+            scale <3,1,3>
+            turbulence 0.12
+            //rotate x*90
+            phase 0.9
+            frequency 4
+            //translate<-.5,0,0>
+        } 
+        finish { 
+            ambient 0.9
+            diffuse 0.1 
+            reflection {
+                0.005
+                0.3
+                falloff 1
+                //fresnel on
+            }
+            specular 0.8 
+            roughness 0.0003 
+            phong 1 
+            phong_size 400
+            conserve_energy
+            }
+    } 
+    interior{ 
+        ior 1.5 
+        caustics 0.5
+    } 
 }
 
 //tear  ///////////////////////////////////////////////
@@ -271,6 +271,19 @@ texture{
     }
 }
 
+//wall  ///////////////////////////////////////////////
+#declare wallTexture =
+    texture{
+        pigment{
+            color rgb <.81,1,0.08>
+        }  
+    finish {
+        diffuse .9
+        phong .1
+        phong_size 30
+    }
+}
+
 //bowl  ///////////////////////////////////////////////
 #declare bowl_base =  rgb<.9,.18,.05>;
 #declare bowl_color =  rgb<.7,.18,.05>*.8;
@@ -284,7 +297,9 @@ texture {
             finish {
                 ambient 0 
                 diffuse 0.3 
-                reflection bowl_color
+                reflection {
+                    bowl_color
+                }
                 
                 //reflection_max 0.6
                 //reflection_min 0.3 
@@ -309,6 +324,12 @@ texture {
                 //reflection_min 0.2 
                 //reflect_metallic 
                 //metallic
+                ior 100
+                reflection{
+                    0.01
+                    0.3
+                    fresnel on
+                }
                 phong 2
                 phong_size 15   
                 //specular .3

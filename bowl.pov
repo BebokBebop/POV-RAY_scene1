@@ -13,7 +13,7 @@
     edgeRoundingR
 )
 //test2
-#declare bowl_radius = 3; //TODO usun
+//#declare bowl_radius = 3; //TODO usun
 #declare inner_radius = bowl_radius - bowlThickness;
 #local sinA=sin(radians(angleA));
 #local cosA=cos(radians(angleA));
@@ -86,6 +86,5 @@ object {
             }
         }
     }
-    scale <1, 0.8, 1> 
 }
 #end
