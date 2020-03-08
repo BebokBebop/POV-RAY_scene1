@@ -2,25 +2,6 @@
 #include "colors.inc"
 
 
-
-#declare pestleWoodPigment = 
-texture{
-    pigment {        
-        wood        
-        color_map {          
-            [0.0 color<.4,.15,.1>*0.15]          
-            [0.9 color <.4,.15,.1>*0.2]          
-            [1.0 color <.4,.15,.1>*0.3]       
-        }        
-        turbulence 0.05        
-        scale <0.1, 0.6, 0.5> 
-    } 
-    finish{
-        phong .1
-        phong_size 100
-    }
-}
-
 #macro pestle(
     maj_radius, 
     minor_radius, 
@@ -72,6 +53,11 @@ union {
     torus {
         maj_radius, minor_radius
         translate <0,4.5*minor_radius,0>
+    }
+    cylinder{
+        <center, 4.5*minor_radius>,
+        <center, 5.0*minor_radius>,
+        total_radius
     }
     cylinder {
         <center, 5.0*minor_radius>,

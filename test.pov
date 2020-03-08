@@ -7,6 +7,7 @@
 #include "pestle.pov"
 #include "prism.pov"
 
+//bowl & pestle
 union{
     //bowl
     object{
@@ -27,11 +28,11 @@ union{
     //pestle
     object {
         pestle(
-            1.4,
-            1.7,
-            15,
-            0, 
-            pestleWoodPigment
+            1.4,                //maj_radius, 
+            1.7,                //minor_radius,
+            15,                 //length, 
+            0,                  //center, 
+            pestleWoodPigment   //wood_texture
         )
         scale <0.15, 0.15, 0.15>
         rotate <-20, 0, -52>    
@@ -41,6 +42,7 @@ union{
     translate<0,.3,0>
 }
 
+
 //camera
 // camera {
 //     angle 22
@@ -49,16 +51,16 @@ union{
 // }
 camera {
     //angle 20
-    angle 10
+    angle 12
     location<0,15,-45>
-    //look_at<0,2,0> 
-    look_at<5.5,3,0> 
+    look_at<5.5,2,0> 
+    right x * 16/9
 }
 //cam top
 // camera {
 //     angle 20
 //     location<0,20,0>
-//     look_at<5,0,0> 
+//     look_at<0,0,0> 
 // }
 //cam bot
 // camera {
@@ -90,7 +92,7 @@ light_source{
 //flash
 #local flashRoz = .1;
 light_source{
-    <0,16.3,-45> 
+    <0,16.5,-45> 
     color rgb<.99,.99,.99>
     area_light <flashRoz, 0, 0>, <0, flashRoz, 0>, 2, 2
     adaptive 1
@@ -114,13 +116,14 @@ object{
 
 //wall
 plane{
-    <0,0,1> 15
+    <0,0,1> 8.8
     texture{
-        pigment{color <01.5,1.6,0.1>}
+        pigment{color <1.5,1.6,0.1>}
         finish {
             diffuse .9
         }
     } 
+    rotate<30,20,0>
 }
 plane{
     <1,0,0> 25

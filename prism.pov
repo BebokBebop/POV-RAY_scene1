@@ -125,7 +125,6 @@ merge {
     //hexBowl
     object {
         hex_prism(hex_top, trapeze_bottom, hex_side*.9999, hex_thickness)
-        material {p_material}
     }
     object {  
         merge {
@@ -133,7 +132,6 @@ merge {
             rhombus_prism(rhombus_top, rhombus_bottom, rhombus_side, rhombus_a)
             //rotate <0,60,0>
         }
-        material {p_material}
     }
     object {  
         merge {
@@ -141,7 +139,6 @@ merge {
             rhombus_prism(rhombus_top, rhombus_bottom, rhombus_side, rhombus_a)
             //rotate <0,60,0>
         }
-        material {p_material}   
         rotate <0,60,0>
     }      
     object {  
@@ -150,7 +147,6 @@ merge {
             rhombus_prism(rhombus_top, rhombus_bottom, rhombus_side, rhombus_a)
             //rotate <0,60,0>
         }
-        material {p_material}  
         rotate <0,120,0>
     }      
     object {  
@@ -159,7 +155,6 @@ merge {
             rhombus_prism(rhombus_top, rhombus_bottom, rhombus_side, rhombus_a)
             //rotate <0,60,0>
         }
-        material {p_material} 
         rotate <0,180,0>
     }      
     object {  
@@ -167,7 +162,6 @@ merge {
             trapeze_prism(trapeze_top1, trapeze_bottom, hex_side, trapeze_cutoff)
             rhombus_prism(rhombus_top, rhombus_bottom, rhombus_side, rhombus_a)
         }
-        material {p_material}
         rotate <0,240,0>
     }
     object {  
@@ -175,8 +169,8 @@ merge {
             trapeze_prism(trapeze_top2, trapeze_bottom, hex_side, trapeze_cutoff)
             rhombus_prism(rhombus_top, rhombus_bottom, rhombus_side, rhombus_a)
         }
-        material {p_material}
         rotate <0,300,0>
     }                                                         
+    material {p_material}
 }
 #end

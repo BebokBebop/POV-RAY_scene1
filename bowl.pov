@@ -30,7 +30,7 @@ object {
                 texture { textureOutside }
             }
             box {
-                <-1.1*bowl_radius, hc, bowl_radius*1.1>,
+                <-1.1*bowl_radius, hc+0.001, bowl_radius*1.1>,
                 <1.1*bowl_radius, 1.1*bowl_radius, -1.1*bowl_radius>
                 texture { textureOutside }
             }
@@ -80,8 +80,8 @@ object {
                 }
             }
             cone {
-                <0,hc-0.001,0>, r1 - bowlThickness
-                <0,hc+neckHeight+0.001,0>, r2 +.01- bowlThickness
+                <0,hc-0.00001,0>, r1 - bowlThickness
+                <0,hc+neckHeight+0.00001,0>, r2 -.02 -bowlThickness
                 texture { textureInside }
             }
         }

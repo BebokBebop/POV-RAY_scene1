@@ -50,51 +50,87 @@ texture { average
 
 #declare flaskNeckBlur = flashNeckBlurMacro( .3, 3 )
 
+#declare FlaskNeckTexture1 = 
+material{
+    texture{
+        pigment{
+            rgb <1,1,.75>*.88
+            filter .5
+        }
+        finish{
+            reflection{
+                0 1
+                fresnel
+            }
+            ambient 0 
+            diffuse 1 
+            specular .4 
+            roughness 1/250
+        }
+    }
+    interior{
+        media{
+            scattering {1 rgb 4}
+        }
+        ior 1.5
+    }
+}
 #declare FlaskTexture1 = 
 material{
     texture{
-        pigment {color rgb .9
+    pigment{ rgbf<.98,.98,.98,0.85>*1}
+    finish { 
+        ambient 0.0
+        diffuse 0.15
+        reflection 0.2
+        specular 0.6
+        roughness 0.005
+        // phong 1 
+        // phong_size 400
+        reflection { 0.03, 1.0 fresnel on }
+        //   conserve_energy
+    }
+    } // end of texture
+
+    interior{ ior 1.5
+        fade_power 1001
+        fade_distance 0.5
+        fade_color <0.8,0.8,0.8>
+    } // end of interior
+
+
+}
+
+#declare FlaskTexture2 =
+material {
+    texture{
+        pigment {
+            rgb 1
             transmit .98
         }
         finish {
-            //specular 0.4
-            reflection .05
-            //refraction 0.5
-            specular .9
-            roughness .0025
-            ior 1.5
-            //crand 0.02
+            reflection {
+                0.05
+                .9
+                fresnel on
+            }
+            //specular 1
+            //roughness .0008
+            //blinn 1
+            conserve_energy
         }
-        normal { 
-            bumps 0.14
-            scale 1.5 
-            rotate<3,30,3> 
+        normal{
+            bumps 0.01
+            scale .5
         }
-        //scale 1000000
     }
-}
-#declare FlaskTexture2 =
-material{
-    texture {
-        flaskNeckBlur
-
-        // normal {
-        //     crackle, 0.010
-        //     form < -1.000, 1.000, 0.000 >
-        //     metric 2000.000
-        //     offset 0.000
-        //     scale     <0.010,0.010,0.010>  /* Scale micro-normals. */
-        // }
+    interior {
+        ior 1.5
+        //media {
+            //absorption 1
+            //method 3
+        //}
     }
-    // interior{
-    //     //ior                 1.500
-    //     caustics            0.000
-    //     //dispersion          2.000
-    //     //dispersion_samples  15.000
-    //     fade_power          2.000
-    //     fade_distance       2.000
-    //     fade_color          rgb <0.000,0.000,0.000>
-    // }
 }
 
 #declare FlaskTexture3 =
@@ -139,7 +175,30 @@ material{
         fade_color          rgb <0.000,0.000,0.000>
     }
 }
-
+#declare FlaskTexture4 =
+material{   //-----------------------------------------------------------
+    texture { 
+        pigment{ rgbf <0.98, 0.98, 0.98, 0.9> }
+        normal { bumps 0.08 scale 1.5} 
+        finish { 
+            ambient 0.1 
+            diffuse 0.1 
+            reflection {
+                0.05  
+                fresnel on
+            }
+            specular 0.8 
+            roughness 0.0003 
+            phong 1 
+            phong_size 400
+            conserve_energy
+            }
+    } // end of texture -------------------------------------------
+    interior{ 
+        ior 1.5 
+        caustics 0.5
+    } // end of interior ------------------------------------------
+}
 
 //tear  ///////////////////////////////////////////////
 #declare tearTextureOutside = 
@@ -163,9 +222,9 @@ texture {
 pigment {        
     wood        
     color_map {          
-    [0.0 color rgb <.9,.05,0>*.3]
-    [0.3 color rgb <.9,.05,0>*.5]
-    [0.6 color rgb <.9,.05,0>*.7]
+    [0.0 color rgb <.9,.18,0>*.3]
+    [0.3 color rgb <.9,.18,0>*.5]
+    [0.6 color rgb <.9,.18,0>*.7]
     }        
     turbulence .05        
     scale <.1, .6, .5>
@@ -213,8 +272,9 @@ texture{
 }
 
 //bowl  ///////////////////////////////////////////////
-#declare bowl_color = rgb<.9,.3,.2>*.3;
-#declare bowl_color2 = rgb<.9,.3,.2>*.2;
+#declare bowl_base =  rgb<.9,.18,.05>;
+#declare bowl_color =  rgb<.7,.18,.05>*.8;
+#declare bowl_color2 = bowl_base*.07;
 #declare bowl_texture_out = 
 texture { 
     wrinkles scale 2 //warp {reset_children}
@@ -230,7 +290,7 @@ texture {
                 //reflection_min 0.3 
                 //reflect_metallic 
                 metallic
-                phong 5
+                phong 20
                 phong_size 10 
 
                 //specular 1 
@@ -272,12 +332,12 @@ texture {
     wrinkles scale 2 //warp {reset_children}
     texture_map {
         [0 
-            pigment { bowl_color}
+            pigment { bowl_color*.7}
             finish {
                 ambient 0 
                 diffuse 0.6
                 reflection {
-                    bowl_color2*.2
+                    bowl_color2*.3
                     //0.03
                     //.4
                 }
@@ -297,10 +357,11 @@ texture {
             }
         ]
         [1 
-            pigment {bowl_color2}
+            pigment {bowl_color2*.5}
             finish {
                 ambient 0 
-                diffuse 0.65 
+                diffuse .3 
+                //reflection .01
                 //reflection_max 0.5
                 //reflection_min 0.2 
                 //reflect_metallic 
@@ -324,13 +385,41 @@ texture {
     } 
 }
 
+//pestle  ///////////////////////////////////////////////
+#declare pestleWoodPigment = 
+texture{
+    pigment {        
+        wood        
+        color_map {          
+            [0.0 color rgb <.5,.15,.1>*0.2]          
+            [0.9 color rgb <.5,.2 ,.1>*0.27]          
+            [1.0 color rgb <.5,.15,.1>*0.35]       
+        }  
+        turbulence 0.1       
+        scale <0.08, 1, 0.08> 
+    } 
+    finish{
+        diffuse .6
+        phong .1
+        phong_size 80
+        specular .15 
+        roughness .015 
+    }
+    normal {
+        wood .1
+        rotate  x*90
+        scale <.1,1,1>
+        turbulence 0.05   
+    }
+}
+
 //prism  ///////////////////////////////////////////////
 #declare prismMaterial = 
 material{
     texture{
         pigment {
-            color rgb<1,.9,.8>*.3
-            transmit .7
+            color rgb<1,.6,.5>*.3
+            transmit .75
         }
         finish {
             //specular 0.4
