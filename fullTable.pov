@@ -26,9 +26,7 @@ object{
 
         0.12 * fsize,       // flaskThickness
 
-        // material{texture{pigment{color Yellow}}},   // flaskTexture,
         material {FlaskTexture4},  // flaskTexture
-        //material{texture{pigment{color Red}}},   // flaskTexture,
         material {FlaskNeckTexture1},    // cylinderTexture
 
         4.42  * fsize,       // altTextureH1,
@@ -75,7 +73,6 @@ union{
             .06    //engeRoundingR
         )
         scale <1.05, 0.89, 1.05> 
-        //scale<.9,.9,.9>
         translate<4.3,1.85,1>
     }
     //pestle
@@ -110,7 +107,6 @@ object{
         1.3,     //trapeze_cutof 
         .6,    //rhombus_side 
         prismMaterial
-        //material{texture{pigment{color Red}}}
     )
     scale .9
     translate<-5.3,0.01,.2>
@@ -119,32 +115,16 @@ object{
 //camera
 camera {
     angle 22
-    //angle 44
     location<0,15,-45>
     look_at<0,2,0> 
     right x * 1920/1080
-    //right x * 16/9
 }
-//cam top
-// camera {
-//     angle 90
-//     location<0,20,0>
-//     look_at<0,0,0>   
-// }
-//cam bot
-// camera {
-//     angle 90
-//     location<0,0,-10>
-//     look_at<0,100,0> 
-// }
 
 //lights
 #declare lampBrightness = .33;
 #declare lampColor =    
 rgb<
         .95 *lampBrightness,
-        // 0.82 *lampBrightness,
-        // 0.698*lampBrightness
         0.8 *lampBrightness,
         0.6 *lampBrightness
 >;
@@ -170,10 +150,8 @@ light_source{
     fade_distance 40
     fade_power 2 
 }  
-//room
 
 //table
-
 #local tableRadius = 23;
 #local tableRoundness = 2;
 #declare doBlur = 1;

@@ -300,16 +300,9 @@ texture {
                 reflection {
                     bowl_color
                 }
-                
-                //reflection_max 0.6
-                //reflection_min 0.3 
-                //reflect_metallic 
                 metallic
                 phong 20
                 phong_size 10 
-
-                //specular 1 
-                //roughness 0.001
             }
             normal {
                 dents 0.02 scale 0.05
@@ -320,10 +313,6 @@ texture {
             finish {
                 ambient 0 
                 diffuse 0.65 
-                //reflection_max 0.5
-                //reflection_min 0.2 
-                //reflect_metallic 
-                //metallic
                 ior 100
                 reflection{
                     0.01
@@ -332,8 +321,6 @@ texture {
                 }
                 phong 2
                 phong_size 15   
-                //specular .3
-                //roughness 0.09
             }
             normal { 
                 bump_map { 
@@ -361,14 +348,8 @@ texture {
                     bowl_color2*.3
                     //0.03
                     //.4
-                }
-                
-                //reflection_max 0.6
-                //reflection_min 0.3 
-                //reflect_metallic 
+                } 
                 metallic
-                // phong 5
-                // phong_size 10 
 
                 specular 1
                 roughness 0.0001
@@ -382,15 +363,8 @@ texture {
             finish {
                 ambient 0 
                 diffuse .3 
-                //reflection .01
-                //reflection_max 0.5
-                //reflection_min 0.2 
-                //reflect_metallic 
-                //metallic
                 phong 1.5
-                phong_size 18     
-                //specular .3
-                //roughness 0.09
+                phong_size 18    
             }
             normal { 
                 bump_map { 
@@ -432,6 +406,27 @@ texture{
         scale <.1,1,1>
         turbulence 0.05   
     }
+}
+#declare handle_texture = texture {
+
+    pigment {
+        color rgb <0.40, 0.15, 0.1>*0.2
+    }                   
+    finish {
+        crand 0.4
+        diffuse 0.7
+    }    
+}
+
+#declare handle_texture2 = texture {
+
+    pigment {
+        color rgb <0.45, 0.15, 0.1>*0.1
+    }                   
+    finish {
+        crand 0.2 
+        diffuse 0.7
+    }    
 }
 
 //prism  ///////////////////////////////////////////////

@@ -1,6 +1,6 @@
 #include "shapes.inc"
 #include "colors.inc"
-
+#include "MyTextures.pov"
 
 #macro pestle(
     maj_radius, 
@@ -10,27 +10,7 @@
     wood_texture
 )
 #local total_radius=maj_radius+minor_radius;
-#declare handle_texture = texture {
 
-    pigment {
-        color rgb <0.40, 0.15, 0.1>*0.2
-    }                   
-    finish {
-        crand 0.4
-        diffuse 0.7
-    }    
-}
-
-#declare handle_texture2 = texture {
-
-    pigment {
-        color rgb <0.45, 0.15, 0.1>*0.1
-    }                   
-    finish {
-        crand 0.2 
-        diffuse 0.7
-    }    
-}
 
 union {
     cylinder {
